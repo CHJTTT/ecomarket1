@@ -1,0 +1,45 @@
+/* src/app/globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { /* Variables para light mode por defecto */
+    --background: #ffffff;
+    --foreground: #1f2937; /* text-gray-800 */
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root { /* Variables si el sistema prefiere dark mode */
+      --background: #111827; /* bg-gray-900 */
+      --foreground: #f3f4f6; /* text-gray-100 */
+    }
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply text-gray-800 bg-white; /* Fondo y texto CLARO por defecto */
+    @apply dark:bg-gray-900 dark:text-gray-100; /* Clases para dark mode */
+
+    font-family: 'Poppins', sans-serif; /* Fuente moderna */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+   h1, h2, h3, h4, h5, h6 {
+     @apply font-semibold text-gray-900 dark:text-white;
+   }
+}
+
+@layer components {
+  /* Tus componentes personalizados aquí */
+}
+
+@layer utilities {
+  /* No se necesita .hero-background */
+}
