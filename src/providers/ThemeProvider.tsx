@@ -2,21 +2,19 @@
 'use client';
 
 import * as React from 'react';
+// Importa el componente real y asígnale un alias para evitar conflicto de nombres
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
-// --- Cambia esta línea ---
+// YA NO importamos ThemeProviderProps directamente
 
-import type { ThemeProviderProps } from 'next-themes'; // <-- Importa directamente
+// --- USA React.ComponentProps para inferir el tipo ---
+// Esto obtiene el tipo de props que acepta el componente NextThemesProvider
+type NextThemesProviderProps = React.ComponentProps<typeof NextThemesProvider>;
 
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+// Nuestro componente wrapper ahora usa el tipo inferido
+export function ThemeProvider({ children, ...props }: NextThemesProviderProps) {
   return (
-    <NextThemesProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-        storageKey="ecomarket-theme"
-        {...props}
-    >
+    // Pasa todas las props recibidas al componente real de next-themes
+    <NextThemesProvider {...props}>
       {children}
     </NextThemesProvider>
   );
