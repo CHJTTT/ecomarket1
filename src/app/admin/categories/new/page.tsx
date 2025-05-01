@@ -1,20 +1,20 @@
-// src/app/admin/categories/new/page.tsx
 'use client';
 
 import { useFormState, useFormStatus } from 'react-dom';
-import { createCategory } from '../actions';
+import { createCategory, CategoryFormState } from '@/app/admin/categories/actions';
 import Link from 'next/link';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
+
   return (
     <button
       type="submit"
       disabled={pending}
       className={`px-6 py-2 rounded text-white font-semibold transition duration-200 ${
         pending
-          ? 'bg-gray-400 cursor-not-allowed' // Botón deshabilitado gris
-          : 'bg-green-600 hover:bg-green-700' // Botón normal verde
+          ? 'bg-gray-400 cursor-not-allowed'
+          : 'bg-green-600 hover:bg-green-700'
       }`}
     >
       {pending ? 'Guardando...' : 'Crear Categoría'}
@@ -23,56 +23,51 @@ function SubmitButton() {
 }
 
 export default function NewCategoryPage() {
-  const initialState = { message: null, errors: {} };
+  const initialState: CategoryFormState = {
+    message: '',
+    errors: {},
+    success: false,
+  };
+
+  // Asegúrate de que createCategory tenga la firma:
+  // (prevState: CategoryFormState, formData: FormData) => Promise<CategoryFormState>
   const [state, dispatch] = useFormState(createCategory, initialState);
 
   return (
-    <div className="p-6 md:p-8 max-w-lg mx-auto">
-       {/* Título oscuro */}
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">Nueva Categoría</h1>
+    <div className="max-w-lg p-6 mx-auto md:p-8">
+      <h1 className="mb-4 text-2xl font-bold text-center">Nueva Categoría</h1>
 
-      <form action={dispatch} className="space-y-4">
-        <div>
-           {/* Label oscura */}
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-            Nombre de la Categoría
+      {/* El action recibe el dispatch que internamente manejará el FormData */}
+      <form action={dispatch} method="post">
+        <div className="mb-4">
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            Nombre de la categoría
           </label>
           <input
             type="text"
-            id="name"
             name="name"
-            required
-             // --- CAMBIO: Quitar text-white, añadir text-gray-900 ---
-            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-gray-900 placeholder-gray-500" // Texto oscuro, placeholder gris
-            placeholder="Ej: Lácteos" // Añadir un placeholder
-            aria-describedby="name-error"
+            id="name"
+            className="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm"
           />
-          <div id="name-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.name &&
-              state.errors.name.map((error: string) => (
-                <p className="mt-1 text-sm text-red-600" key={error}>
-                  {error}
-                </p>
-              ))}
-          </div>
+          {state.errors?.name && (
+            <p className="mt-1 text-sm text-red-600">{state.errors.name}</p>
+          )}
         </div>
 
-        {/* Mensaje de error (rojo está bien) */}
         {state.message && (
-          <div aria-live="polite" aria-atomic="true">
-              <p className="text-sm text-red-600">{state.message}</p>
-          </div>
+          <p className={`mb-4 text-sm ${state.success ? 'text-green-600' : 'text-red-600'}`}>
+            {state.message}
+          </p>
         )}
 
-        {/* Botones */}
-        <div className="flex items-center justify-end space-x-4 pt-2">
-            {/* Enlace Cancelar oscuro */}
-           <Link href="/admin/categories" className="text-gray-600 hover:text-gray-800">
-                Cancelar
-           </Link>
-           <SubmitButton />
-        </div>
+        <SubmitButton />
       </form>
+
+      <div className="mt-4 text-center">
+        <Link href="/admin/categories" className="text-blue-600 hover:underline">
+          Volver a categorías
+        </Link>
+      </div>
     </div>
   );
 }

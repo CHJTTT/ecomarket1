@@ -1,9 +1,8 @@
 // src/app/admin/page.tsx
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { ShoppingBagIcon, TagIcon, EnvelopeIcon } from '@heroicons/react/24/outline'; // Usaremos iconos
+import { ShoppingBagIcon, TagIcon, EnvelopeIcon } from '@heroicons/react/24/outline';
 
-// Metadata para el título de la pestaña del navegador
 export const metadata: Metadata = {
   title: 'Dashboard - Admin EcoMarket',
   description: 'Panel de administración de la tienda EcoMarket.',
@@ -11,13 +10,18 @@ export const metadata: Metadata = {
 
 export default function AdminDashboardPage() {
   return (
-    <div className="p-6 md:p-8"> {/* Padding general */}
+    // El padding aquí está bien, ya que main tiene el suyo propio.
+    // Puedes quitar el padding de main y dejarlo solo aquí si prefieres.
+    <div className="p-0"> {/* O mantener p-6 md:p-8 si prefieres doble padding */}
+
+      {/* Título con color explícito */}
       <h1 className="mb-4 text-3xl font-bold text-gray-800">Panel de Administración</h1>
+      {/* Párrafo con color explícito */}
       <p className="mb-8 text-gray-600">
         Bienvenido al panel de gestión de EcoMarket. Selecciona una sección para empezar.
       </p>
 
-      {/* Sección de Enlaces Rápidos */}
+      {/* Sección de Enlaces Rápidos (Colores explícitos ya aplicados) */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
         {/* Tarjeta Productos */}
@@ -53,11 +57,7 @@ export default function AdminDashboardPage() {
           </div>
         </Link>
 
-        {/* Puedes añadir más tarjetas aquí en el futuro (ej. Usuarios, Pedidos) */}
-
       </div>
-
-      {/* Podrías añadir aquí más secciones en el futuro, como estadísticas rápidas */}
     </div>
   );
 }

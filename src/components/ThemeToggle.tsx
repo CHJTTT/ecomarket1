@@ -1,42 +1,48 @@
-// src/components/ThemeToggle.tsx
+// src/components/ThemeToggle.tsx (o la ruta correcta de tu componente)
 'use client';
 
-import { useTheme } from '@/context/ThemeContext';
-import { SunIcon, MoonIcon } from '@heroicons/react/24/outline'; // O usa 'solid' si prefieres
+import * as React from 'react';
+import { useTheme } from 'next-themes';
+import { SunIcon, MoonIcon } from '@heroicons/react/24/outline'; // O los iconos que uses
 
-export default function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
+export function ThemeToggle() {
+  const [mounted, setMounted] = React.useState(false);
+  // useTheme nos da:
+  // - theme: el tema activo ('light', 'dark') si está forzado
+  // - resolvedTheme: el tema que se está mostrando ('light' o 'dark'), incluso si theme es 'system'
+  // - setTheme: la función para cambiar el tema ('light', 'dark', 'system')
+  const { theme, resolvedTheme, setTheme } = useTheme();
 
-  // Determina qué clases de texto aplicar basado en si el header está scrolleado o no
-  // Necesitamos pasar esta información o inferirla de alguna manera si el botón está en el header
-  // Por simplicidad aquí, asumimos un color base que funcione en ambos estados iniciales,
-  // pero idealmente, este botón recibiría una prop 'isScrolled' si está en el Header.
-  // O simplemente usa colores fijos si el botón siempre está en el header sólido.
+  // useEffect solo se ejecuta en el cliente, evita mismatch de hidratación
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  // Ejemplo de clases si el botón estuviera SIEMPRE en el header sólido:
-  // const iconColor = "text-gray-600 dark:text-gray-400";
-  // const hoverColor = "hover:bg-gray-100 dark:hover:bg-gray-700";
+  // Mostrar un placeholder o nada hasta que esté montado en el cliente
+  if (!mounted) {
+    return (
+        <button aria-label="Cargando tema..." disabled className="p-2 text-gray-400 rounded-md">
+            <MoonIcon className="w-5 h-5" /> {/* Icono placeholder */}
+        </button>
+    );
+  }
 
-  // Ejemplo de clases si intentamos que cambie como los otros iconos del header
-  // (Esto es más complejo sin pasar 'isScrolled' como prop)
-  // Vamos a usar una versión que asume estar en el header y cambia:
-  // Necesitaría acceso a 'isScrolled' para funcionar perfectamente.
-  // Como alternativa, podemos darle un estilo fijo simple.
-
-  // --- Estilo Fijo Simple (más fácil de implementar ahora) ---
-   const buttonClasses = "p-2 rounded-full text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 dark:focus:ring-offset-gray-800";
-
+  // Función para cambiar entre light y dark
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+  };
 
   return (
     <button
       onClick={toggleTheme}
-      className={buttonClasses}
-      aria-label={theme === 'light' ? 'Activar modo oscuro' : 'Activar modo claro'}
+      aria-label={`Cambiar a tema ${resolvedTheme === 'dark' ? 'claro' : 'oscuro'}`}
+      // Ajusta los estilos según tu diseño
+      className="inline-flex items-center justify-center p-2 text-gray-600 transition-colors rounded-md dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
     >
-      {theme === 'light' ? (
-        <MoonIcon className="w-5 h-5 sm:w-6 sm:h-6" /> // Luna para cambiar a oscuro
+      {resolvedTheme === 'dark' ? (
+        <SunIcon className="w-6 h-6" aria-hidden="true" />
       ) : (
-        <SunIcon className="w-5 h-5 sm:w-6 sm:h-6" /> // Sol para cambiar a claro
+        <MoonIcon className="w-6 h-6" aria-hidden="true" />
       )}
     </button>
   );

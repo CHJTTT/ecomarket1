@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useCart } from '@/context/CartContext'; // Asegúrate que la ruta al context es correcta
 import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
-import ThemeToggle from './ThemeToggle'; // Importa el botón de tema
+import { ThemeToggle } from '@/components/ThemeToggle'; // <-- Usa llaves {}
 
 export default function Header() {
   // Intenta obtener useCart de forma segura

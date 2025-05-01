@@ -1,12 +1,11 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next';
 import './globals.css';
-import { ThemeProvider } from '@/context/ThemeContext'; // Importa el Provider
-
-// const inter = Inter({ subsets: ['latin'], variable: '--font-inter' }); // Ya no es necesario si usas Poppins
+// --- 1. Importar el NUEVO ThemeProvider ---
+import { ThemeProvider } from '@/providers/ThemeProvider'; // Ajusta esta ruta si creaste el archivo en otro lugar
 
 export const metadata: Metadata = {
-  title: 'EcoMarket', // Puedes personalizar esto más si quieres
+  title: 'EcoMarket',
   description: 'Tienda de productos orgánicos',
 };
 
@@ -14,15 +13,18 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" suppressHydrationWarning> {/* suppressHydrationWarning es útil con temas */}
-      {/* Aplica la fuente Poppins desde globals.css al body */}
-      {/* Removida la clase de la fuente Inter */}
+    // suppressHydrationWarning ayuda a next-themes a manejar la diferencia inicial servidor/cliente
+    <html lang="es" suppressHydrationWarning>
       <body>
-        {/* --- ENVOLVER CON ThemeProvider --- */}
-        <ThemeProvider>
-          {children}
+        {/* --- 2. Envolver la aplicación con el NUEVO ThemeProvider --- */}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children} {/* El resto de tu aplicación va aquí */}
         </ThemeProvider>
-        {/* --------------------------------- */}
       </body>
     </html>
   );
