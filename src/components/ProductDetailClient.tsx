@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import toast from 'react-hot-toast';
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid'; // Usando solid
-import { formatPrice } from '@/lib/utils'; // Asegúrate que esta importación funciona
+import { formatPrice } from '@/lib/utils'; 
 
 interface ProductDetailClientProps {
   // ... (props sin cambios) ...

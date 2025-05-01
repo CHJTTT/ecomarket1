@@ -1,12 +1,12 @@
-// src/app/(public)/page.tsx - FINAL VERSION
+// src/app/(public)/page.tsx - 
 
 import { prisma } from '@/lib/prisma';
 import { formatPrice } from '@/lib/utils';
 import ProductCard from '@/components/ProductCard';
 import SearchBar from '@/components/SearchBar';
-import CategoryFilter from '@/components/CategoryFilter'; // Asume que existe y funciona
+import CategoryFilter from '@/components/CategoryFilter'; 
 import PaginationControls from '@/components/PaginationControls';
-import FeaturedCategories from '@/components/FeaturedCategories'; // Asume que existe y funciona
+import FeaturedCategories from '@/components/FeaturedCategories'; 
 import type { Prisma, Product, Category } from '@prisma/client';
 import Link from 'next/link';
 import { Metadata } from 'next';
@@ -106,11 +106,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       <section className="relative flex items-center justify-center w-full h-screen px-6 overflow-hidden text-center text-white">
         <video
           autoPlay loop muted playsInline
-          poster="/images/hero-poster.jpg" // <-- ACTUALIZA RUTA POSTER
+          
           className="absolute top-0 left-0 z-0 object-cover w-full h-full"
         >
-          <source src="/videos/hero-video.webm" type="video/webm" /> {/* <-- ACTUALIZA RUTA VIDEO WEBM */}
-          <source src="/videos/hero-video.mp4" type="video/mp4" />   {/* <-- ACTUALIZA RUTA VIDEO MP4 */}
+          {/* <source src="/videos/hero-video.webm" type="video/webm" */}
+          <source src="/videos/hero-video.mp4" type="video/mp4" />  
           Tu navegador no soporta videos HTML5.
         </video>
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/20 via-transparent to-black/40" aria-hidden="true"></div>
@@ -164,9 +164,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 </Suspense>
             </div>
           </section>
-           {/* Puedes añadir más secciones aquí si lo deseas */}
+        
       </div>
-       {/* Footer iría después de este div, usualmente en el layout */}
+     
     </>
   );
 }

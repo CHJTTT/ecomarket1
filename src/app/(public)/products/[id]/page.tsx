@@ -4,7 +4,7 @@
 import React from 'react';
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
-// --- CORRECCIÓN: Eliminar 'Prisma,' si no se usa ---
+
 import type { Product, Category } from '@prisma/client'; // Solo importar Product y Category si Prisma no se usa
 // --- FIN CORRECCIÓN ---
 import { formatPrice } from '@/lib/utils';

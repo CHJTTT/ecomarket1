@@ -1,7 +1,5 @@
 // src/app/layout.tsx
 import type { Metadata } from 'next';
-// Quita la fuente Inter si no la usas y usas Poppins desde globals.css
-// import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext'; // Importa el Provider
 
