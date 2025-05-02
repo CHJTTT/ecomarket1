@@ -6,13 +6,14 @@
 
 generator client {
   provider = "prisma-client-js"
-  
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // --- MODIFICADO: Usar la variable de entorno de Vercel/Neon ---
+  url      = env("POSTGRES_PRISMA_URL")
 }
+
 // Modelo para las Categorías de Productos
 model Category {
   id          Int       @id @default(autoincrement()) // ID único, autoincrementable
@@ -26,7 +27,6 @@ model Category {
 }
 
 // Modelo para los Productos
-// Modelo para los Productos
 model Product {
   id          Int      @id @default(autoincrement())
   name        String
@@ -35,16 +35,19 @@ model Product {
   sku         String   @unique
   imageUrl    String?
   stock       Int      @default(0)
-  published   Boolean  @default(false) // <-- ¡AÑADE ESTA LÍNEA!
+  published   Boolean  @default(false) // Campo para saber si está publicado
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   // --- Relación con Category ---
   categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade) // Añadir onDelete puede ser útil
+  // Añadido onDelete: Cascade - Si borras una categoría, se borran sus productos (¡Cuidado!)
+  // Cambia a SetNull si prefieres que los productos queden sin categoría (requiere categoryId ser opcional: Int?)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@map("products")
 }
+
 // Modelo para los Mensajes de Contacto
 model ContactMessage {
   id        Int      @id @default(autoincrement()) // ID único
