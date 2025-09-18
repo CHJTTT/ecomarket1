@@ -41,7 +41,7 @@ export default function Footer() {
         {/* Sección inferior con copyright */}
         <div className="text-center text-sm">
           <p>
-            © {currentYear} EcoMarket. Todos los derechos reservados.
+            © {currentYear} CHRISTIAN CHINCHAY.
           </p>
           {/* Opcional: Enlace a política de privacidad o términos */}
           {/*
